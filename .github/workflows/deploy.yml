@@ -21,6 +21,7 @@ jobs:
         run: |
           gem install bundler
           bundle install
+          npm install
       
       - name: Build Jekyll Site
         run: |
