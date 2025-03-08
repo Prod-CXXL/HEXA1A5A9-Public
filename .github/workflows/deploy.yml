@@ -1,36 +1,36 @@
-name: Deploy to GitHub Pages
+name: Deploy Jekyll Site to GitHub Pages
+
 on:
   push:
     branches:
-      - main # Change this to your master branch's name
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    steps:
 
-      - name: Checkout Code
+    steps:
+      - name: Checkout private repo
         uses: actions/checkout@v3
 
-      - name: Set Up Ruby
+      - name: Set up Ruby for Jekyll
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1.2 # Adjust as needed
+          ruby-version: '2.7'  # You can change this to the Ruby version you're using
 
-      - name: Install Dependencies
+      - name: Install dependencies (Ruby & npm)
         run: |
           gem install bundler
           bundle install
           npm install
-      
-      - name: Build Jekyll Site
-        run: |
-          bundle exec jekyll build
-     
-      - name: Deploy Site
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+
+      - name: Deploy to GitHub Pages Repo
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          external_repository: Prod-CXXL/HEXA1A5A9-Public
-          deploy_key: ${{ secrets.GH_PAT }}
-          publish_branch: main # Change this to your master branch's name
-          publish_dir: ./_site # change to the output dir of your Jekyll build
+          branch: gh-pages
+          folder: _site  # Adjust this if your build folder is different
+          repository-name: Prod-CXXL/HEXA1A5A9-Public
+          token: ${{ secrets.GH_PAT }}
