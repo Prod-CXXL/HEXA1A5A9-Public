@@ -28,7 +28,7 @@ jobs:
           bundle exec jekyll build
      
       - name: Deploy Site
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           external_repository: Prod-CXXL/HEXA1A5A9-Public
           deploy_key: ${{ secrets.GH_PAT }}
