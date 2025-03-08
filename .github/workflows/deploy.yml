@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Change if your branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v3
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build # Change if you use another build process
+
+      - name: Deploy to Public GitHub Pages Repo
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # This is the branch GitHub Pages serves from
+          folder: _site # Change this to your actual build output folder
+          repository-name: Prod-CXXL/HEXA1A5A9-Public  # Change this to your public repo
+          token: ${{ secrets.GH_PAT }}
